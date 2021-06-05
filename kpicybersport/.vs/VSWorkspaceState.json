@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\articles\\templates\\articles",
+    "\\kpicybersport",
+    "\\main\\templates",
+    "\\main\\templates\\main",
+    "\\tournament",
+    "\\tournament\\templates",
+    "\\tournament\\templates\\tournament"
+  ],
+  "SelectedNode": "\\tournament\\views.py",
+  "PreviewInSolutionExplorer": false
+}

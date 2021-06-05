@@ -1,0 +1,111 @@
+﻿{% extends "main/index.html" %}
+
+{% load static %}
+
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<title>{{article.title}}</title>
+<style>
+
+        img {
+            max-width: 100%;
+            height: auto;
+            width: 100%; /* ie8 */
+        }
+        textarea {
+            max-width: 100%;
+            height: auto;
+            width: auto\9; /* ie8 */
+        }
+
+        input[type="text"] {
+            border: 1px solid gray;
+            max-width: 100%;
+            height: auto;
+            width: auto\9; /* ie8 */
+        }
+        p {
+            max-width: 100%;
+                height: auto;
+                width: auto\9; /* ie8 */
+                word-wrap:break-word;
+                
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 1em;
+        }
+</style>
+<div class="container body-content">
+<div class="jumbotron">
+    <h1>{{article.title}}</h1>
+    <div>
+        <div class="row">
+            <div class="col-md-12">
+        {%if article.imagin1 %}
+            <img src="{{MEDIA_URL}}{{ article.imagin1.url }}">
+        {%endif%}
+        <p></p>
+            </div> 
+        </div>
+    </div>
+    <p></p>
+    <div class='sta'>
+        {% autoescape off %} {{article.content}}{% endautoescape %}
+    </div>
+
+    <em class='ble'>Остання зміна {{article.updated}}</em>
+    <br>
+    <em class='ble'>Автор - {{article.author}}</em>
+    <p></p>
+    <div class="row">
+        <div class="col-md-4">
+    {%if article.link1%}
+    <a href={{article.link1}} class="btn btn-outline-secondary btn-block">{{article.link1_name}} &raquo;</a>
+    {%endif%}
+    <p></p>
+        </div>
+        <div class="col-md-4">
+    {%if article.link2%}
+    <a href={{article.link2}} class="btn btn-outline-secondary btn-block">{{article.link2_name}} &raquo;</a>
+    {%endif%}
+    <p></p>
+        </div>
+        <div class="col-md-4">
+    {%if article.link3%}
+    <a href={{article.link3}} class="btn btn-outline-secondary btn-block">{{article.link3_name}} &raquo;</a>
+    {%endif%}
+    <p></p>
+        </div>
+    </div>
+</div>
+<div class="jumbotron">
+    {% if latest_comments_list %}
+        {% for a in latest_comments_list %}
+            <div class="jumbotron" style="background-color:#152826;">
+            <p>
+                <strong class="ble">{{a.author}}</strong>
+                <p class="sta">{{a.comment_text}}</p>
+            </p>
+            </div>
+        {% endfor %}
+    {% else %}
+    Коментарів немає , стань першим :)
+    {% endif %}
+    </div>
+    <div class="jumbotron">
+    <div class="row">
+        <div class="col-md-4">
+    <form action="{% url 'articles:leave_comment' article.id %}" method="POST">
+        {% csrf_token %}
+        <h2 class="rde">{{user.username}}</h2>
+        <textarea name="text" required="" placeholder="Текст коментария" cols="50" rows="5"></textarea><br>
+        <button type="submit" class="btn btn-primary btn-block">Оставить коментарий</button>
+    </form>
+    </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

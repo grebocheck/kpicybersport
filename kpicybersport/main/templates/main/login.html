@@ -1,0 +1,68 @@
+{% extends "main/base.html" %}
+{% block title %}
+    <title>Вхід</title>
+{% endblock %}
+{% block content %}
+<div class="container body-content">
+<style>
+    body{
+        padding-top: 10%;
+    }
+
+    .jumbotron{
+        background-color: #152826;
+    }
+
+</style>
+<h2 class='rde'>{{ title }}</h2>
+<div class="row">
+    <div class="col-md-8">
+        <div class="jumbotron">
+        <section id="loginForm">
+            <form action="." method="post" class="form-horizontal">
+                {% csrf_token %}
+                <h4 class='ble'>Введіть дані необхідні для входу</h4>
+                <hr />
+                <div class="form-group">
+                    <label for="id_username" class="sta col-md-2 control-label">Ім'я користувача</label>
+                    <div class="col-md-10">
+                        {{ form.username }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_password" class="sta col-md-2 control-label">Пароль</label>
+                    <div class="col-md-10">
+                        {{ form.password }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="hidden" name="next" value="/" />
+                        <button class="btn btn-lg btn-secondary btn-block" type="submit">Увійти</button>
+                        <p></p>
+                        <a class="btn btn-outline-secondary btn-block" href ="{% url 'register' %}" >Або зареєструватися</a>
+                    </div>
+                </div>
+                {% if form.errors %}
+                <p class="validation-summary-errors">Please enter a correct user name and password.</p>
+                {% endif %}
+
+            </form>
+        </section>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <section id="socialLoginForm"></section>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    {% load static %}
+<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+
+{% endblock %}
+</div>

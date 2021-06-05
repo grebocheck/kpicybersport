@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    <title>Про сайт</title>
+{% endblock %}
+{% block content %}
+<body>
+    <div class="jumbotron">
+    <div class="container body-content" >
+    <div class="row">
+        <div class="col-md-4" style="margin-left: auto; margin-right: auto;">
+        <h1>Ваш профіль:</h1>
+        <p class='sta'>ПІ : {{profile.player_name}}</p>
+        <p class="sta">Посилання на Steam : {{profile.steam_link}}</p>
+        <p class="sta">Вуз : {{profile.vuz}}</p>
+        <p class="sta">Факультет : {{profile.fuck}}</p>
+        <p class="sta">Група : {{profile.group}}</p>
+        <p class="sta">Ігровий рейтинг : {{profile.rate}}</p>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="jumbotron">
+        <div class="container body-content">
+        <div class="row">
+            <div class="col-md-4" style="margin-left: auto; margin-right: auto;">
+        <form action="edit_profile" method="POST">
+            {% csrf_token %}
+            <h2 class='rde'>Зміна профілю</h2>
+            <h5 class="ble">Можете заповнювати не всі поля , а ті які бажаєте змінити</h3>
+            <textarea name="player_name" placeholder="ПІ" cols="50" rows="1"></textarea>
+            <textarea name='steam_link' placeholder="Посилання на Steam" cols="50" rows="1"></textarea>
+            <textarea name='vuz' placeholder="Вуз" cols="50" rows="1"></textarea>
+            <textarea name='fuck' placeholder="Факультет" cols="50" rows="1"></textarea>
+            <textarea name='group' placeholder="Група" cols="50" rows="1"></textarea>
+            <textarea name='rate' placeholder="Ігровий рейтинг" cols="50" rows="1"></textarea>
+            <button type="submit" class="btn btn-secondary btn-block">змінити</button>
+        </form>
+        </div>
+        </div>
+        </div>
+        </div>
+</body>
+{% endblock %}

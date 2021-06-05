@@ -1,0 +1,24 @@
+{% extends "main/base.html" %}
+{% block title %}
+    <title>Реєстрація успішна</title>
+{% endblock %}
+<style>
+    body{
+        padding-top: 10%;
+    }
+
+    .jumbotron{
+        background-color: #152826;
+    }
+
+</style>
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron">
+    <h1>Ласкаво просимо {{ new_user.username }} !</h1>
+    <p style="color:whitesmoke">Ваш аккаунт був успішно створений <a href="{% url "login" %}">Увійти</a> .</p>
+    </div>
+    </div>
+</div>
+{% endblock %}

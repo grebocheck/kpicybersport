@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    <title>Контакти</title>
+    <style>
+            p {
+            max-width: 100%;
+            height: auto;
+            width: auto\9; /* ie8 */
+            word-wrap:break-word;
+            }
+    </style>
+{% endblock %}
+{% block content %}
+<body>
+    <div class="jumbotron">
+    <div class="container body-content">
+        <h1>Контакти</h1>
+        <br>
+        {% if contact_text %}
+        <pre class="sta" style="max-width: 100%;
+                height: auto;
+                width: auto\9; /* ie8 */
+                word-wrap:break-word;">{{contact_text}}</pre>
+        {% endif %}
+    </div>
+    </div>
+</body>
+{% endblock %}

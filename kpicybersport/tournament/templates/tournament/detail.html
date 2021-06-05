@@ -1,0 +1,146 @@
+﻿{% extends "main/index.html" %}
+
+{% load static %}
+
+
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<title>{{tournament.title}}</title>
+<style>
+
+        img {
+            max-width: 100%;
+            height: auto;
+            width: 100%; /* ie8 */
+        }
+
+        textarea {
+            max-width: 100%;
+            height: auto;
+            width: auto\9; /* ie8 */
+        }
+
+        input[type="text"] {
+            border: 1px solid gray;
+            max-width: 100%;
+            height: auto;
+            width: auto\9; /* ie8 */
+        }
+
+        textarea[type="text"] {
+            border: 1px solid gray;
+            width: 100%;
+            height: auto;
+            width: auto\9; /* ie8 */
+        }
+    p {
+        max-width: 100%;
+            height: auto;
+            width: auto\9; /* ie8 */
+            word-wrap:break-word;
+            
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 1em;
+    }
+
+    th{
+        color:grey;
+    }
+    td{
+        color:grey;
+    }
+</style>
+<div class="container body-content">
+<div class="jumbotron">
+    <h1>{{tournament.title}}</h1>
+    <div>
+        <div class="row">
+            <div class="col-md-12">
+        {%if tournament.imagin1 %}
+            <img src="{{MEDIA_URL}}{{ tournament.imagin1.url }}">
+        {%endif%}
+        <p></p>
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <div class='sta'>
+        {% autoescape off %} {{tournament.content}}{% endautoescape %}
+    </div>
+
+    <em class='ble'>Остання зміна {{tournament.updated}}</em>
+    <br>
+    <em class='ble'>Автор - {{tournament.author}}</em>
+    <br>
+    <em class='ble'>Реєстрація закінчуеться {{tournament.deadline_reg}}</em>
+    <p></p>
+    <div class="row">
+        <div class="col-md-4">
+    {%if tournament.link1%}
+    <a href={{tournament.link1}} class="btn btn-outline-secondary btn-block">{{tournament.link1_name}} &raquo;</a>
+    {%endif%}
+    <p></p>
+        </div>
+        <div class="col-md-4">
+    {%if tournament.link2%}
+    <a href={{tournament.link2}} class="btn btn-outline-secondary btn-block">{{tournament.link2_name}} &raquo;</a>
+    {%endif%}
+    <p></p>
+        </div>
+        <div class="col-md-4">
+    {%if tournament.link3%}
+    <a href={{tournament.link3}} class="btn btn-outline-secondary btn-block">{{tournament.link3_name}} &raquo;</a>
+    {%endif%}
+    <p></p>
+        </div>
+    </div>
+</div>
+    {% if forma %}
+    <div class="jumbotron">
+    <div class="row">
+        <div class="col-md-4">
+    <form action="{% url 'tournament:leave_team' tournament.id %}" method="POST">
+        {% csrf_token %}
+        <h2 class='rde'>Капітан : {{user.username}}</h2>
+        {% for error in messages %}
+            <p class="rde">{{ error }}</p>
+        {% endfor %}
+        <textarea name="team_name" required="" placeholder="Назва команди" cols="50" rows="1"></textarea>
+        <textarea name='contact_capitan' required="" placeholder="Контакти для звязку" cols="50" rows="1"></textarea>
+        <textarea name='team_list' required="" placeholder="Інші гравці через пробіл" cols="50" rows="1"></textarea>
+        <textarea name='dop_team_list' required="" placeholder="Запасні гравці через пробіл" cols="50" rows="1"></textarea>
+        <button type="submit" class="btn btn-secondary btn-block">Відправити за'явку на участь</button>
+    </form>
+    </div>
+    </div>
+    </div>
+    {%endif%}
+    {%if mess_auth%}
+    <div class="jumbotron">
+        <h1>Для реєстрації будь-ласка авторизуйтесь</h1>
+    </div>
+    {%endif%}
+    {% if  mess_reg %}
+    <div class="jumbotron">
+        <h1 class="rde">Ви вже зареєструвалися на цей турнір</h1>
+        {% for a in teg %}
+        <p>
+            <strong class="ble">Назва команди : {{a.team_name}}</strong>
+            <p class='sta'>Капітан : {{a.capitan}}</p>
+            <p class='sta'>Контакти : {{a.contact_capitan}}</p>
+            <p class='sta'>Основні гравці : {{a.team_list}}</p>
+            <p class='sta'>Запасні гравці : {{a.dop_team_list}}</p>
+            <p class='sta'>Дата реєстрації : {{a.date_post}}</p>
+        {%endfor%}
+        <form action="{% url 'tournament:del_team' tournament.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary btn-block">Видалити заявку</button>
+        </form>
+    </div>
+    {%endif%}
+</div>
+{% endblock %}
