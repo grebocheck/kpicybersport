@@ -144,3 +144,5 @@ CKEDITOR_CONFIGS = {
     },
 
 }
+
+SOZDATEL='Heridium'
