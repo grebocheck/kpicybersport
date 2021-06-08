@@ -90,7 +90,7 @@ def register(request):
             # Save the User object
             new_user.save()
             # Створеня моделі профіля для нового користувача
-            person = Person.objects.create(user=new_user , player_name='',steam_link = '' ,vuz='',fuck='',group='',rate='')
+            person = Person.objects.create(user=new_user , player_name=' ',steam_link = ' ' ,vuz=' ',fuck=' ',group=' ',rate=' ')
             person.save()
             return render(request, 'main/register_done.html', {'year':datetime.now().year,'new_user': new_user})
     else:
@@ -125,6 +125,8 @@ def edit_profile(request):
         a.steam_link = steam_link_new
     if vuz_new:
         a.vuz = vuz_new
+    if fuck_new:
+        a.fuck = fuck_new
     if group_new:
         a.group = group_new
     if rate_new:

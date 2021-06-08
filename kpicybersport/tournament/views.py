@@ -11,6 +11,7 @@ from django.http import HttpRequest
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 
+from main.models import Person
 from .models import Tournament , Team
 
 def list(request):
@@ -175,3 +176,60 @@ def del_team(request , tournament_id ):
             k.delete()
 
     return HttpResponseRedirect(reverse('tournament:single' , args = (a.id,)))
+
+def commands(request , tournament_id):
+    try:
+        a = Tournament.objects.get(id = tournament_id)
+    except:
+        raise Http404("турнір не знайдено")
+
+    class Cap:
+        pass
+
+    commands = a.team_set.order_by('-id')
+    for b in commands:
+        uchasniki = []
+        osn = b.team_list.split(" ")
+        dop = b.dop_team_list.split(" ")
+        
+        cas = Cap()
+        cas.name = b.capitan
+        cas.role = 'Капітан'
+        k = User.objects.get(username = b.capitan)
+        cas.pri = Person.objects.get(user=k).player_name
+        cas.steam = Person.objects.get(user=k).steam_link
+        cas.vuz = Person.objects.get(user=k).vuz
+        cas.fuck = Person.objects.get(user=k).fuck
+        cas.group = Person.objects.get(user=k).group
+        cas.rate = Person.objects.get(user=k).rate
+        uchasniki.append(cas)
+
+        for c in osn:
+            cas = Cap()
+            cas.name = c
+            cas.role = 'Учасник'
+            k = User.objects.get(username = c)
+            cas.pri = Person.objects.get(user=k).player_name
+            cas.steam = Person.objects.get(user=k).steam_link
+            cas.vuz = Person.objects.get(user=k).vuz
+            cas.fuck = Person.objects.get(user=k).fuck
+            cas.group = Person.objects.get(user=k).group
+            cas.rate = Person.objects.get(user=k).rate
+            uchasniki.append(cas)
+           
+        for d in dop:
+            cas = Cap()
+            cas.name = d
+            cas.role = 'Запасний'
+            k = User.objects.get(username = d)
+            cas.pri = Person.objects.get(user=k).player_name
+            cas.steam = Person.objects.get(user=k).steam_link
+            cas.vuz = Person.objects.get(user=k).vuz
+            cas.fuck = Person.objects.get(user=k).fuck
+            cas.group = Person.objects.get(user=k).group
+            cas.rate = Person.objects.get(user=k).rate
+            uchasniki.append(cas)
+
+        b.temate = uchasniki
+
+    return render(request , "tournament/commands.html" , {"tournament": a, "commands":commands})

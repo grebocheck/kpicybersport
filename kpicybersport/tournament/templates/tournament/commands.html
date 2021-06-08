@@ -1,0 +1,50 @@
+{% extends "main/index.html" %}
+
+{% load static %}
+
+
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<title>Команди | {{tournament.title}}</title>
+<div class="container body-content">
+    <div class="jumbotron">
+        <h1>Команди {{tournament.title}}</h1>
+        
+        {%if commands%}
+        {%for a in commands%}
+        <div class="jumbotron" style="background-color:#152826;">
+        <table border="1">
+            <caption class="ble">{{a.team_name}}</caption>
+            <tr>
+                <th class='sta'>Учасники</th>
+                <th class='sta'>Роль</th>
+                <th class='sta'>ПІ</th>
+                <th class='sta'>Steam</th>
+                <th class='sta'>Вуз</th>
+                <th class='sta'>Факультет</th>
+                <th class='sta'>Група</th>
+                <th class='sta'>Рейтинг</th>
+            </tr>
+            {%for b in a.temate%}
+            <tr>
+                <td class='sta'>{{b.name}}</td>
+                <td class='sta'>{{b.role}}</td>
+                <td class='sta'>{{b.pri}}</td>
+                <td class='sta'>{{b.steam}}</td>
+                <td class='sta'>{{b.vuz}}</td>
+                <td class='sta'>{{b.fuck}}</td>
+                <td class='sta'>{{b.group}}</td>
+                <td class='sta'>{{b.rate}}</td>
+            </tr>
+            {%endfor%}
+        </table>
+        </div>
+        {%endfor%}
+        {%else%}
+        <h4>Команд немає</h4>
+        {%endif%}
+    </div>
+</div>
+{%endblock%}
