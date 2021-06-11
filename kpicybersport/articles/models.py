@@ -11,7 +11,7 @@ class Article(models.Model):
     imagin1 = models.ImageField("Картинка превю",upload_to='articles/' , blank=False, null=False)
     post_date = models.DateTimeField("Дата публікації" , auto_now=False, auto_now_add=True)
     updated = models.DateTimeField("Редаговано" , auto_now=True, auto_now_add=False)
-    author = models.ForeignKey(User , on_delete = models.CASCADE )
+    author = models.ForeignKey(User , on_delete = models.CASCADE , default = 1)
     link1 = models.URLField("Кнопка 1", blank=True)
     link1_name = models.TextField("Назва кнопки 1", blank=True)
     link2 = models.URLField("Кнопка 2", blank=True)
@@ -35,8 +35,8 @@ class Article(models.Model):
 
 class Comment(models.Model):
     article = models.ForeignKey(Article , on_delete = models.CASCADE)
+    user = models.ForeignKey(User , on_delete = models.CASCADE)
     date_post = models.DateTimeField("Дата створення" , auto_now=False, auto_now_add=True)
-    author = models.CharField('Імя коментатора',  max_length = 50)
     comment_text = models.CharField('Текст коментаря', max_length = 200)
 
     def __str__(self):

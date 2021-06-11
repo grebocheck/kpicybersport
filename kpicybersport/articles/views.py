@@ -34,17 +34,19 @@ def single(request, article_id):
 
     latest_comments_list = a.comment_set.order_by('-id')[:10]
 
-    return render(request , "articles/detail.html" , {"article": a, 'latest_comments_list': latest_comments_list,'title':a.title, 'year':datetime.now().year,'author':a.author ,})
+    comment_forma = True
+    if request.user.username == '':
+        comment_forma = False
+
+    return render(request , "articles/detail.html" , {"article": a, 'latest_comments_list': latest_comments_list,'title':a.title, 'year':datetime.now().year,'author':a.author.username, 'post_date':a.post_date, 'comment_forma':comment_forma })
 
 def leave_comment(request , article_id ):
-    if request.user.username == "":
-        ima = "Невідомий"
-    else:
-        ima = request.user.username
-    try:
-        a = Article.objects.get(id = article_id)
-    except:
-        raise Http404("Статтю не знайдено")
-    a.comment_set.create(author = ima, comment_text = request.POST['text'])
+    if request.user.username != "":
+        auth = request.user
+        try:
+            a = Article.objects.get(id = article_id)
+        except:
+            raise Http404("Статтю не знайдено")
+        a.comment_set.create(user = auth, comment_text = request.POST['text'])
 
-    return HttpResponseRedirect(reverse('articles:single' , args = (a.id,)))
+        return HttpResponseRedirect(reverse('articles:single' , args = (a.id,)))

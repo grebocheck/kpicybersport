@@ -20,7 +20,7 @@ class ArticleModelAdmin(admin.ModelAdmin):
 admin.site.register(Article , ArticleModelAdmin)
 
 class CommentModelAdmin(admin.ModelAdmin):
-    list_display = ["id" ,"article", "comment_text", "author" , "date_post"]
+    list_display = ["id" ,"article", "comment_text", "user" , "date_post"]
     list_filter = ["date_post"]
     class Meta:
         model=Comment

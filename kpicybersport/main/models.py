@@ -2,6 +2,7 @@ from django.db import models
 from articles.models import Article
 from django.contrib.auth.models import User
 from django.conf import settings
+from ckeditor.fields import RichTextField
 
 
 class Person(models.Model):
@@ -19,13 +20,13 @@ class Person(models.Model):
 
 
 class Abou(models.Model):
-    about_text = models.TextField("Текст")
+    about_text = RichTextField("Про сайт")
     class Meta:
         verbose_name = "Про сайт"
         verbose_name_plural = 'Про сайт'
 
 class Contact(models.Model):
-    contact_text = models.TextField("Текст")
+    contact_text = RichTextField("Контакти")
     class Meta:
         verbose_name = "Контакти"
         verbose_name_plural = 'Контакти'
@@ -42,7 +43,7 @@ class Imagin(models.Model):
         verbose_name_plural = 'Картинки на прокруці'
 
 class Topx(models.Model):
-    top_article = models.ForeignKey(Article , on_delete = models.CASCADE)
+    top_article = models.IntegerField('ID статті')
     class Meta:
         verbose_name = "Стаття на головній"
         verbose_name_plural = 'Статті на головній'

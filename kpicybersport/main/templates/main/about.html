@@ -9,7 +9,9 @@
         <h1>Про сайт</h1>
         <br>
         {% if about_text %}
-        <p class='sta'>{{about_text}}</p>
+        <div class='sta'>
+            {% autoescape off %}{{about_text}}{% endautoescape %}
+        </div>
         {% endif %}
     </div>
     </div>

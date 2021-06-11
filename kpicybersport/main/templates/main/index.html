@@ -83,32 +83,32 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="bd-placeholder-img" src='{{imagin1}}'>
+            <img class="bd-placeholder-img" src='{{imagin1.imagin_url}}'>
             <div class="container">
               <div class="carousel-caption">
-                <h1>{{title1}}</h1>
-                <p class="ble">{{text1}}</p>
-                <p><a class="btn btn-lg btn-secondary " href="{{urlb1}}" role="button">{{btnt1}}</a></p>
+                <h1>{{imagin1.title}}</h1>
+                <p class="ble">{{imagin1.text}}</p>
+                <p><a class="btn btn-lg btn-secondary " href="{{imagin1.bath_url}}" role="button">{{imagin1.bath_title}}</a></p>
               </div>
             </div>
           </div>
           <div class="carousel-item">
-            <img class="bd-placeholder-img" src='{{imagin2}}'>
+            <img class="bd-placeholder-img" src='{{imagin2.imagin_url}}'>
             <div class="container">
               <div class="carousel-caption ">
-                <h1>{{title2}}</h1>
-                <p class="ble">{{text2}}</p>
-                <p><a class="btn btn-lg btn-secondary" href="{{urlb2}}" role="button">{{btnt2}}</a></p>
+                <h1>{{imagin2.title}}</h1>
+                <p class="ble">{{imagin2.text}}</p>
+                <p><a class="btn btn-lg btn-secondary" href="{{imagin2.bath_url}}" role="button">{{imagin2.bath_title}}</a></p>
               </div>
             </div>
           </div>
           <div class="carousel-item">
-            <img class='bd-placeholder-img' src='{{imagin3}}'>
+            <img class='bd-placeholder-img' src='{{imagin3.imagin_url}}'>
             <div class="container">
               <div class="carousel-caption">
-                <h1>{{title3}}</h1>
-                <p class="ble">{{text3}}</p>
-                <p><a class="btn btn-lg btn-secondary " href="{{urlb3}}" role="button">{{btnt3}}</a></p>
+                <h1>{{imagin3.title}}</h1>
+                <p class="ble">{{imagin3.text}}</p>
+                <p><a class="btn btn-lg btn-secondary " href="{{imagin3.bath_url}}" role="button">{{imagin3.bath_title}}</a></p>
               </div>
             </div>
           </div>
@@ -131,23 +131,20 @@
           <div class="col-md-4">
             <img src="{{MEDIA_URL}}{{ article1.imagin1.url }}">
             <h2 class="ble">{{article1.title}}</h2>
-            <p class='sta toxt'>{{ article1.article_text|truncatechars:200 }}</p>
-            <p><a class="btn btn-secondary" href="articles/{{article1.id}}" role="button">Читати далі &raquo;</a></p>
+            <p><a class="btn btn-secondary" href="articles/{{article1.id}}" role="button">Читати&raquo;</a></p>
           </div>
           {% if article2 %}
           <div class="col-md-4">
             <img src="{{MEDIA_URL}}{{ article2.imagin1.url }}">
             <h2 class="ble">{{article2.title}}</h2>
-            <p class='sta toxt'>{{ article2.article_text|truncatechars:200 }}</p>
-            <p><a class="btn btn-secondary" href="articles/{{article2.id}}" role="button">Читати далі &raquo;</a></p>
+            <p><a class="btn btn-secondary" href="articles/{{article2.id}}" role="button">Читати&raquo;</a></p>
           </div>
           {% endif %}
           {% if article3 %}
           <div class="col-md-4">
             <img src="{{MEDIA_URL}}{{ article3.imagin1.url }}">
             <h2 class="ble">{{article3.title}}</h2>
-            <p class='sta toxt'>{{ article3.article_text|truncatechars:200 }}</p>
-            <p><a class="btn btn-secondary" href="articles/{{article3.id}}" role="button">Читати далі &raquo;</a></p>
+            <p><a class="btn btn-secondary" href="articles/{{article3.id}}" role="button">Читати&raquo;</a></p>
           </div>
           {% endif %}
           </div>

@@ -55,7 +55,7 @@
     <div class='sta'>
         {% autoescape off %} {{article.content}}{% endautoescape %}
     </div>
-
+    <em class='ble'>Остання зміна {{article.date_post}}</em>
     <em class='ble'>Остання зміна {{article.updated}}</em>
     <br>
     <em class='ble'>Автор - {{article.author}}</em>
@@ -82,19 +82,19 @@
     </div>
 </div>
 <div class="jumbotron">
+    <h2 class="ble">Коментарі :</h2>
+    <br>
     {% if latest_comments_list %}
         {% for a in latest_comments_list %}
-            <div class="jumbotron" style="background-color:#152826;">
-            <p>
-                <strong class="ble">{{a.author}}</strong>
-                <p class="sta">{{a.comment_text}}</p>
-            </p>
+            <div class="jumbotron" style="background-color:#152826; padding-top: 15px; padding-bottom: 12px;">
+                <p class="sta"><strong class="ble">{{a.user.username}}</strong> : {{a.comment_text}} <em class='ble'>{{a.date_post}}</em></p>
             </div>
         {% endfor %}
     {% else %}
     Коментарів немає , стань першим :)
     {% endif %}
     </div>
+    {%if comment_forma%}
     <div class="jumbotron">
     <div class="row">
         <div class="col-md-4">
@@ -107,5 +107,10 @@
     </div>
     </div>
     </div>
+    {%else%}
+    <div class="jumbotron">
+            <h2 class="rde" style="text-align: center;">Для відправки коментарів необхідно авторизуватися</h2>
+    </div>
+    {%endif%}
 </div>
 {% endblock %}

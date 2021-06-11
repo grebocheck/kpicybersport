@@ -196,12 +196,13 @@ def commands(request , tournament_id):
         cas.name = b.capitan
         cas.role = 'Капітан'
         k = User.objects.get(username = b.capitan)
-        cas.pri = Person.objects.get(user=k).player_name
-        cas.steam = Person.objects.get(user=k).steam_link
-        cas.vuz = Person.objects.get(user=k).vuz
-        cas.fuck = Person.objects.get(user=k).fuck
-        cas.group = Person.objects.get(user=k).group
-        cas.rate = Person.objects.get(user=k).rate
+        pers = Person.objects.get(user=k)
+        cas.pri = pers.player_name
+        cas.steam = pers.steam_link
+        cas.vuz = pers.vuz
+        cas.fuck = pers.fuck
+        cas.group = pers.group
+        cas.rate = pers.rate
         uchasniki.append(cas)
 
         for c in osn:
@@ -209,12 +210,13 @@ def commands(request , tournament_id):
             cas.name = c
             cas.role = 'Учасник'
             k = User.objects.get(username = c)
-            cas.pri = Person.objects.get(user=k).player_name
-            cas.steam = Person.objects.get(user=k).steam_link
-            cas.vuz = Person.objects.get(user=k).vuz
-            cas.fuck = Person.objects.get(user=k).fuck
-            cas.group = Person.objects.get(user=k).group
-            cas.rate = Person.objects.get(user=k).rate
+            pers = Person.objects.get(user=k)
+            cas.pri = pers.player_name
+            cas.steam = pers.steam_link
+            cas.vuz = pers.vuz
+            cas.fuck = pers.fuck
+            cas.group = pers.group
+            cas.rate = pers.rate
             uchasniki.append(cas)
            
         for d in dop:
@@ -222,12 +224,13 @@ def commands(request , tournament_id):
             cas.name = d
             cas.role = 'Запасний'
             k = User.objects.get(username = d)
-            cas.pri = Person.objects.get(user=k).player_name
-            cas.steam = Person.objects.get(user=k).steam_link
-            cas.vuz = Person.objects.get(user=k).vuz
-            cas.fuck = Person.objects.get(user=k).fuck
-            cas.group = Person.objects.get(user=k).group
-            cas.rate = Person.objects.get(user=k).rate
+            pers = Person.objects.get(user=k)
+            cas.pri = pers.player_name
+            cas.steam = pers.steam_link
+            cas.vuz = pers.vuz
+            cas.fuck = pers.fuck
+            cas.group = pers.group
+            cas.rate = pers.rate
             uchasniki.append(cas)
 
         b.temate = uchasniki

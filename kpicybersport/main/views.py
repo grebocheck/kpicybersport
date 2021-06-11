@@ -11,57 +11,34 @@ from main.forms import UserRegistrationForm
 def index(request):
     try:
         a = Topx.objects.all()
-        b1 = a[0].top_article
-        b2 = a[1].top_article
-        b3 = a[2].top_article
-        print(a[0].top_article.imagin1)
+        article1 = Article.objects.get(id = a[0].top_article)
+        article2 = Article.objects.get(id = a[1].top_article)
+        article3 = Article.objects.get(id = a[2].top_article)
     except:
-        b1 = ''
-        b2 = ''
-        b3 = ''
+        article1 = ''
+        article2 = ''
+        article3 = ''
         print("ERORR: Виберіть статті на головну сторінку")
 
     try:
         a = Imagin.objects.all()
-        ib = a[0].imagin_url
-        ic = a[1].imagin_url
-        id = a[2].imagin_url
-        tb = a[0].title
-        tc = a[1].title
-        td = a[2].title
-        xb = a[0].texte
-        xc = a[1].texte
-        xd = a[2].texte
-        bb = a[0].bath_title
-        bc = a[1].bath_title
-        bd = a[2].bath_title
-        ub = a[0].batn_url
-        uc = a[1].batn_url
-        ud = a[2].batn_url
+        print(a)
+        imagin1 = a[0]
+        imagin2 = a[1]
+        imagin3 = a[2]
+        print('s')
     except:
-        ib = ""
-        ic = ""
-        id = ""
-        tb = ""
-        tc = ""
-        td = ""
-        xb = ""
-        xc = ""
-        xd = ""
-        bb = ""
-        bc = ""
-        bd = ""
-        ub = ""
-        uc = ""
-        ud = ""
+        imagin1 = ''
+        imagin2 = ''
+        imagin3 = ''
+        print('d')
     return render(request , 'main/index.html'  , {'year':datetime.now().year ,
-                                                 'imagin1': ib , 'imagin2': ic , 'imagin3': id,
-                                                 'title1' : tb , 'title2' : tc , 'title3' : td ,
-                                                 'text1'  : xb ,'text2'   : xc ,'text3'   : xd ,
-                                                 'btnt1'  : bb ,'btnt2'   : bc ,'btnt3'   : bd ,
-                                                 'urlb1'  : ub ,'urlb2'   : uc ,'urlb3'   : ud ,
-                                                 'article1' : b1 , 'article2' :b2 , 'article3':b3,
-                                                  })
+                                                  'imagin1':imagin1,
+                                                  'imagin2':imagin2,
+                                                  'imagin3':imagin3,
+                                                  'article1':article1,
+                                                  'article2':article2,
+                                                  'article3':article3})
 
 def about(request):
     try:
@@ -103,6 +80,7 @@ def profile(request):
         return render(request, 'main/n_profile.html',{'year':datetime.now().year})
     else:
         try:
+            print(request.user.username)
             a = Person.objects.get(user = request.user)
         except:
             raise Http404("Профіль не знайдено")
