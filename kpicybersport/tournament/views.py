@@ -139,8 +139,6 @@ def leave_team(request , tournament_id ):
     #перевірка на повтори
     mass = team_list_m + dop_team_list_m
     set_mass = set(mass)
-    print(mass)
-    print(set_mass)
     if len(mass) != len(set_mass):
         message = f"гравці не можуть повторюватись"
         errors.append(message)
@@ -218,20 +216,20 @@ def commands(request , tournament_id):
             cas.group = pers.group
             cas.rate = pers.rate
             uchasniki.append(cas)
-           
-        for d in dop:
-            cas = Cap()
-            cas.name = d
-            cas.role = 'Запасний'
-            k = User.objects.get(username = d)
-            pers = Person.objects.get(user=k)
-            cas.pri = pers.player_name
-            cas.steam = pers.steam_link
-            cas.vuz = pers.vuz
-            cas.fuck = pers.fuck
-            cas.group = pers.group
-            cas.rate = pers.rate
-            uchasniki.append(cas)
+        if dop[0] != '':
+            for d in dop:
+                cas = Cap()
+                cas.name = d
+                cas.role = 'Запасний'
+                k = User.objects.get(username = d)
+                pers = Person.objects.get(user=k)
+                cas.pri = pers.player_name
+                cas.steam = pers.steam_link
+                cas.vuz = pers.vuz
+                cas.fuck = pers.fuck
+                cas.group = pers.group
+                cas.rate = pers.rate
+                uchasniki.append(cas)
 
         b.temate = uchasniki
 

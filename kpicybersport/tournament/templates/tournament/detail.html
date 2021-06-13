@@ -106,13 +106,14 @@
     <form action="{% url 'tournament:leave_team' tournament.id %}" method="POST">
         {% csrf_token %}
         <h2 class='rde'>Капітан : {{user.username}}</h2>
+        <h6 class='ble'>Гравці мають заповнити профілі</h6>
         {% for error in messages %}
             <p class="rde">{{ error }}</p>
         {% endfor %}
-        <textarea name="team_name" required="" placeholder="Назва команди" cols="50" rows="1"></textarea>
-        <textarea name='contact_capitan' required="" placeholder="Контакти для звязку" cols="50" rows="1"></textarea>
-        <textarea name='team_list' required="" placeholder="Інші гравці через пробіл" cols="50" rows="1"></textarea>
-        <textarea name='dop_team_list' required="" placeholder="Запасні гравці через пробіл" cols="50" rows="1"></textarea>
+        <textarea name="team_name" required="" placeholder="Назва команди *" cols="50" rows="1"></textarea>
+        <textarea name='contact_capitan' required="" placeholder="Контакти для звязку *" cols="50" rows="1"></textarea>
+        <textarea name='team_list' required="" placeholder="Інші гравці через пробіл *" cols="50" rows="1"></textarea>
+        <textarea name='dop_team_list' placeholder="Запасні гравці через пробіл" cols="50" rows="1"></textarea>
         <button type="submit" class="btn btn-secondary btn-block">Відправити за'явку на участь</button>
     </form>
     </div>
