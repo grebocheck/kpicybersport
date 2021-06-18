@@ -53,3 +53,11 @@ class Downl(models.Model):
     class Meta:
         verbose_name = "Файл"
         verbose_name_plural = 'Файли'
+
+class PassToken(models.Model):
+    user = models.ForeignKey(User ,on_delete = models.CASCADE)
+    post_date = models.DateTimeField('Час створення')
+    token = models.TextField('Токен')
+    class Meta:
+        verbose_name = "Токен зміни паролю"
+        verbose_name_plural = 'Токени зміни паролю'

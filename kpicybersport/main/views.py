@@ -2,11 +2,20 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
-from datetime import datetime
-from django.http import HttpRequest
-from .models import Abou , Contact , Imagin , Topx , Person
+from datetime import datetime , timedelta
+from django.http import HttpRequest , Http404 , HttpResponseRedirect , HttpResponse
+from .models import Abou , Contact , Imagin , Topx , Person , PassToken
 from articles.models import Article
 from main.forms import UserRegistrationForm
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
+import random
+from django.contrib import messages
+from kpicybersport import settings
+from pytz import timezone
+from django.urls import reverse
+
+chars = 'abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 
 def index(request):
     try:
@@ -22,16 +31,13 @@ def index(request):
 
     try:
         a = Imagin.objects.all()
-        print(a)
         imagin1 = a[0]
         imagin2 = a[1]
         imagin3 = a[2]
-        print('s')
     except:
         imagin1 = ''
         imagin2 = ''
         imagin3 = ''
-        print('d')
     return render(request , 'main/index.html'  , {'year':datetime.now().year ,
                                                   'imagin1':imagin1,
                                                   'imagin2':imagin2,
@@ -126,3 +132,78 @@ def sitemap(request):
     )
 
     sponseRedirect(reverse('articles:detail' , args = (a.id,)))
+
+def reset_mail(request):
+    try:
+        a = User.objects.get(email = request.POST['email'])
+    except:
+        raise Http404("Користувача не знайдено")
+    times = datetime.now()
+    token = ''
+    for i in range(32):
+        token += random.choice(chars)
+
+    pass_token = PassToken.objects.create(user=a,post_date=times,token=token)
+    pass_token.save()
+    try:
+        send_mail(message=f"""Вітаю {a.username}, Ви ініціювали зміну паролю на сайті {settings.SITE_URL}
+        
+        
+        Якщо це були ви то перейдіть по посиланню {settings.SITE_URL}/reset_pass/{token}""",subject='Зміна паролю', from_email='sitekpicybersport@gmail.com', recipient_list = [a.email])
+    except Exception as e:
+        print(e)
+        return render(request , 'main/error.html'  , {'year':datetime.now().year})
+    
+    return render(request , 'main/email_send.html'  , {'year':datetime.now().year})
+
+
+def forgot_password(request):
+    return render(request , 'main/forgot_password.html'  , {'year':datetime.now().year})
+
+def new_password(request,token):
+    try:
+        a = PassToken.objects.get(token=token)
+    except:
+        return render(request , 'main/token_old.html'  , {'year':datetime.now().year})
+    time_now = datetime.now().astimezone(timezone(settings.TIME_ZONE))
+    #print(settings.TIME_ZONE)
+    #print(time_now-a.post_date)
+    if time_now-a.post_date <= timedelta(minutes = 30):
+        return render(request , 'main/password_reset.html'  , {'year':datetime.now().year})
+    else:
+        return render(request , 'main/token_old.html'  , {'year':datetime.now().year})
+
+def reset_pass(request,token):
+    try:
+        a = PassToken.objects.get(token=token)
+    except:
+         return render(request , 'main/token_old.html'  , {'year':datetime.now().year})
+    time_now = datetime.now().astimezone(timezone(settings.TIME_ZONE))
+    if time_now-a.post_date <= timedelta(minutes = 30):
+        pass1 = request.POST["new_password"]
+        pass2 = request.POST["repit_password"]
+        errors = []
+        if pass1 != pass2:
+            errors.append('Повтор паролю не сбігається з новим паролем')
+        if errors:
+            for er in errors:
+                messages.error(request, er)
+            return HttpResponseRedirect(reverse('new_password' , args = (token,)))
+        else:
+            user = a.user
+            user.set_password(pass1)
+            user.save()
+            a.delete()
+            return render(request , 'main/sucess_new_password.html'  , {'year':datetime.now().year})
+    else:
+        return render(request , 'main/token_old.html'  , {'year':datetime.now().year})
+
+def clen_tokens():
+    try:
+        tokens = PassToken.objects.all()
+        time_now = datetime.now().astimezone(timezone(settings.TIME_ZONE))
+        for a in tokens:
+            if time_now-a.post_date <= timedelta(minutes = 30):
+                a.delete()
+    except:
+        pass

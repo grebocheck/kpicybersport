@@ -39,8 +39,8 @@
                     <div class="col-md-offset-2 col-md-10">
                         <input type="hidden" name="next" value="/" />
                         <button class="btn btn-lg btn-secondary btn-block" type="submit">Увійти</button>
-                        <p></p>
-                        <a class="btn btn-outline-secondary btn-block" href ="{% url 'register' %}" >Або зареєструватися</a>
+                        <a class="btn btn-outline-secondary btn-block" href ="{% url 'forgot_password' %}" >Забули пароль?</a>
+                        <a class="btn btn-outline-secondary btn-block" href ="{% url 'register' %}" >Зареєструватися</a>
                     </div>
                 </div>
                 {% if form.errors %}

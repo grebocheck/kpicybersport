@@ -5,10 +5,12 @@
     "\\kpicybersport\\articles",
     "\\kpicybersport\\kpicybersport",
     "\\kpicybersport\\main",
+    "\\kpicybersport\\main\\templates",
+    "\\kpicybersport\\main\\templates\\main",
     "\\kpicybersport\\tournament",
     "\\kpicybersport\\tournament\\templates",
     "\\kpicybersport\\tournament\\templates\\tournament"
   ],
-  "SelectedNode": "\\kpicybersport\\main\\models.py",
+  "SelectedNode": "\\kpicybersport\\tournament\\views.py",
   "PreviewInSolutionExplorer": false
 }

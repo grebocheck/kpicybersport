@@ -1,11 +1,13 @@
 from django.urls import path
 from . import views
+from django.contrib import auth
 from datetime import datetime
 from django.conf.urls import url
 from django.views.generic.base import RedirectView
 from articles.models import Article
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps.views import sitemap
+
 
 info_articles = {
         'queryset': Article.objects.all(),
@@ -23,4 +25,8 @@ urlpatterns = [
     path('profile/edit_profile', views.edit_profile , name='edit_profile'),
     path('register/', views.register, name='register'),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/media/favicon.ico'), name='favicon'),
+    path('forgot_password/', views.forgot_password , name='forgot_password'),
+    path('forgot_password/reset_password', views.reset_mail , name='reset_mail'),
+    path('reset_pass/<str:token>/', views.new_password, name='new_password'),
+    path('reset_pass/<str:token>/reset', views.reset_pass, name='reset_pass'),
 ]

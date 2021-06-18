@@ -49,6 +49,11 @@ def single(request , tournament_id):
     #    if Tournament.objects.get(id = tournament_id).deadline_reg.replace(tzinfo=None) < datetime.now().replace(tzinfo=None):
     #        forma = False
 
+    #отображение кнопки для прсомотра команд
+    comma = False
+    if request.user.has_perm('auth.change_user'):
+        comma = True
+
     if request.user.username == "":
         # пользователь который не авторизовался
         forma = False
@@ -78,7 +83,7 @@ def single(request , tournament_id):
 
     latest_team_list = a.team_set.order_by('-id')
 
-    return render(request , "tournament/detail.html" , {"tournament": a,'title':a.title, 'year':datetime.now().year,'author':a.author,'forma':forma,'mess_auth':mess_auth,'mess_reg':mess_reg ,'teg':teg})
+    return render(request , "tournament/detail.html" , {"tournament": a,'title':a.title, 'year':datetime.now().year,'author':a.author,'forma':forma,'mess_auth':mess_auth,'mess_reg':mess_reg ,'teg':teg,'comma':comma})
 
 
 
@@ -176,38 +181,25 @@ def del_team(request , tournament_id ):
     return HttpResponseRedirect(reverse('tournament:single' , args = (a.id,)))
 
 def commands(request , tournament_id):
-    try:
-        a = Tournament.objects.get(id = tournament_id)
-    except:
-        raise Http404("турнір не знайдено")
+    if request.user.has_perm('auth.change_user'):
+        try:
+            a = Tournament.objects.get(id = tournament_id)
+        except:
+            raise Http404("турнір не знайдено")
 
-    class Cap:
-        pass
+        class Cap:
+            pass
 
-    commands = a.team_set.order_by('-id')
-    for b in commands:
-        uchasniki = []
-        osn = b.team_list.split(" ")
-        dop = b.dop_team_list.split(" ")
+        commands = a.team_set.order_by('-id')
+        for b in commands:
+            uchasniki = []
+            osn = b.team_list.split(" ")
+            dop = b.dop_team_list.split(" ")
         
-        cas = Cap()
-        cas.name = b.capitan
-        cas.role = 'Капітан'
-        k = User.objects.get(username = b.capitan)
-        pers = Person.objects.get(user=k)
-        cas.pri = pers.player_name
-        cas.steam = pers.steam_link
-        cas.vuz = pers.vuz
-        cas.fuck = pers.fuck
-        cas.group = pers.group
-        cas.rate = pers.rate
-        uchasniki.append(cas)
-
-        for c in osn:
             cas = Cap()
-            cas.name = c
-            cas.role = 'Учасник'
-            k = User.objects.get(username = c)
+            cas.name = b.capitan
+            cas.role = 'Капітан'
+            k = User.objects.get(username = b.capitan)
             pers = Person.objects.get(user=k)
             cas.pri = pers.player_name
             cas.steam = pers.steam_link
@@ -216,12 +208,12 @@ def commands(request , tournament_id):
             cas.group = pers.group
             cas.rate = pers.rate
             uchasniki.append(cas)
-        if dop[0] != '':
-            for d in dop:
+
+            for c in osn:
                 cas = Cap()
-                cas.name = d
-                cas.role = 'Запасний'
-                k = User.objects.get(username = d)
+                cas.name = c
+                cas.role = 'Учасник'
+                k = User.objects.get(username = c)
                 pers = Person.objects.get(user=k)
                 cas.pri = pers.player_name
                 cas.steam = pers.steam_link
@@ -230,7 +222,23 @@ def commands(request , tournament_id):
                 cas.group = pers.group
                 cas.rate = pers.rate
                 uchasniki.append(cas)
+            if dop[0] != '':
+                for d in dop:
+                    cas = Cap()
+                    cas.name = d
+                    cas.role = 'Запасний'
+                    k = User.objects.get(username = d)
+                    pers = Person.objects.get(user=k)
+                    cas.pri = pers.player_name
+                    cas.steam = pers.steam_link
+                    cas.vuz = pers.vuz
+                    cas.fuck = pers.fuck
+                    cas.group = pers.group
+                    cas.rate = pers.rate
+                    uchasniki.append(cas)
 
-        b.temate = uchasniki
+            b.temate = uchasniki
 
-    return render(request , "tournament/commands.html" , {"tournament": a, "commands":commands})
+        return render(request , "tournament/commands.html" , {"tournament": a, "commands":commands})
+    else:
+        return render(request , 'main/error.html'  , {'year':datetime.now().year})

@@ -1,4 +1,4 @@
 django==2.2.14
 django-bootstrap4==2.2.0
 Pillow
-ckeditor
+django-ckeditor

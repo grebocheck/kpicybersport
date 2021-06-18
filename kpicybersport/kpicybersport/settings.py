@@ -133,6 +133,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+# модуль для статтей
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 CKEDITOR_CONFIGS = {
@@ -145,4 +146,29 @@ CKEDITOR_CONFIGS = {
 
 }
 
+# емейл настройки
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sitekpicybersport@gmail.com'
+EMAIL_HOST_PASSWORD = 'P7z7xVj95L'
+# если используется защищенное соединение
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+ADMINS = (
+    ('Heridium', 'gadzilayer@gmail.com'),
+)
+MANAGERS = ADMINS
+
+# пометка о себе любимом
 SOZDATEL='Heridium'
+
+#if DEBUG:
+#    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#else:
+#    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# URL подставляемый как корневая ссылка в письма востановления пароля
+if DEBUG:
+    SITE_URL = "http://127.0.0.1:8000"
+else:
+    SITE_URL = "https://esport.kpi.ua"
