@@ -26,7 +26,7 @@ class Article(models.Model):
         return self.title
  
     def get_absolute_url(self):
-        return "/%s/" %(self.id)
+        return "/articles/%s/" %(self.id)
  
     class Meta:
         ordering = ["-id", "-post_date"]

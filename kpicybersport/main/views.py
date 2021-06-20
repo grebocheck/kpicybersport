@@ -14,6 +14,7 @@ from django.contrib import messages
 from kpicybersport import settings
 from pytz import timezone
 from django.urls import reverse
+from django.contrib import sitemaps
 
 chars = 'abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 
@@ -118,20 +119,25 @@ def edit_profile(request):
     a.save()
     return render(request, 'main/profile.html',{'year':datetime.now().year , 'profile':a})
 
-def sitemap(request):
-    """Renders the sitemap page."""
-    assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'sitemap.xml',
-        {
-            'title':'Плани на сайт',
-            'message':'Heridium site description',
-            'year':datetime.now().year,
-        }
-    )
+#def sitemap(request):
+#    """renders the sitemap page."""
+#    assert isinstance(request, httprequest)
+#    return render(request,'main/sitemap.xml',{'year':datetime.now().year,})
 
-    sponseRedirect(reverse('articles:detail' , args = (a.id,)))
+#    sponseredirect(reverse('articles:detail' , args = (a.id,)))
+
+class HomeSitemap(sitemaps.Sitemap):
+    priority = 0.5         # Приоритет
+    changefreq = 'daily'   # Частота проверки
+ 
+    # Метод, возвращающий массив с url-ками
+    def items(self):
+        return ['home', 'contact','about']
+ 
+    # Метод непосредственной экстракции url из шаблона
+    def location(self, item):
+        return reverse(item)
+
 
 def reset_mail(request):
     try:
