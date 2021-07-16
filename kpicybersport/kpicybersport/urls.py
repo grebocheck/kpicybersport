@@ -30,7 +30,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('' , include('main.urls')),
     path('articles/',include('articles.urls')),
-    path('tournament/', include('tournament.urls')),
+    #path('tournament/', include('tournament.urls')),
     path('login/',
          LoginView.as_view
          (

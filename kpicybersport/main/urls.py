@@ -5,7 +5,7 @@ from datetime import datetime
 from django.conf.urls import url
 from django.views.generic.base import RedirectView
 from articles.models import Article
-from tournament.models import Tournament
+#from tournament.models import Tournament
 from django.contrib.sitemaps import views as sitemap_views    # Представление 
 from django.contrib.sitemaps import GenericSitemap            # Шаблонный класс для формирования страницы Sitemap
 from django.views.decorators.cache import cache_page          # Декоратор кеширования
@@ -15,13 +15,15 @@ info_articles = {
         'date_field': 'post_date',
     }
 
-info_tournaments = {
-        'queryset': Tournament.objects.all(),
-        'date_field': 'post_date',
-    }
+# old module tournament
+#info_tournaments = {
+#        'queryset': Tournament.objects.all(),
+#        'date_field': 'post_date',
+#    }
+
 
 sitemaps = {'aricles': GenericSitemap(info_articles, priority=0.5),
-            'tournaments': GenericSitemap(info_tournaments, priority=0.7),
+            #'tournaments': GenericSitemap(info_tournaments, priority=0.7),
             'home': views.HomeSitemap
             }
 

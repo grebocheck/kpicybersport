@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'articles',
     'main',
-    'tournament',
+    #'tournament',
 
     'ckeditor',
     'ckeditor_uploader',
